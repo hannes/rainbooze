@@ -1,0 +1,79 @@
+{
+	"userid"  : 42,
+	"score"   : 344.2,
+	"trend1m" : 0.12,
+	"transactions" : [
+		{
+			"txnid" : 5,
+		 	"date"  : "2014-09-15",
+		 	"time"  : "13:45",
+		 	"score" : -2.0,
+		 	"items" : [
+		 		{
+		 			"ean" : "2374713000007",
+		 			"name": "corned beef",
+		 			"score": -2,
+		 			"nutrit": {
+						"calories": 54,
+						"sugars": 11.8,
+						"sat_fat": 0,
+						"unsat_fat": 0,
+						"fibers": 2.3,
+						"carbs": 12,
+						"cholestrol": 0,
+						"protein": 0.4
+					}
+ 		 		},
+		 		{
+					"ean"   : "8718265086340",
+		 			"name"  : "ah extra mager hamburger",
+		 			"score" : -2,
+		 			"nutrit": {}
+		 		}
+		 	],
+		 	"nutrit": {
+				"calories": 54,
+				"sugars": 11.8,
+				"sat_fat": 0,
+				"unsat_fat": 0,
+				"fibers": 2.3,
+				"carbs": 12,
+				"cholestrol": 0,
+				"protein": 0.4
+			}
+		},
+		{
+			"txnid" : 6,
+		 	"date"  : "2014-09-16",
+		 	"time"  : "16:45",
+		 	"score" : -1.0,
+		 	"items" : [
+		 		{
+		 			"ean" : "2302893000005",
+		 			"name": "ah amb gerook achterham",
+		 			"score": -1,
+		 			"nutrit": {
+						"calories": 232,
+						"sugars": 11.8,
+						"sat_fat": 0,
+						"unsat_fat": 0,
+						"fibers": 2.3,
+						"carbs": 12,
+						"cholestrol": 0,
+						"protein": 0.4
+					}
+ 		 		}
+		 	],
+		 	"nutrit": {
+				"calories": 232,
+				"sugars": 11.8,
+				"sat_fat": 0,
+				"unsat_fat": 0,
+				"fibers": 2.3,
+				"carbs": 12,
+				"cholestrol": 0,
+				"protein": 0.4
+			}
+		}
+	]
+}

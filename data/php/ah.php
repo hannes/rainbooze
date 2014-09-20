@@ -1,7 +1,50 @@
 <?php
-$key = 'jCGz64WRumc237fGBClh0Q0x5BlkFqN1';
-$ah = new Ahold($key);
-print_r($ah->get_winkels(array('winkelformat' => 'AH')));//example call
+$ah = new Ahold('f1F2ipoxB0Za1MhjYAhlLx47MBPi80aN');
+date_default_timezone_set("UTC");
+mb_internal_encoding("ISO-8859-1");
+
+function dateRange( $first, $last, $step = '+1 day', $format = 'Y/m/d' ) {
+
+    $dates = array();
+    $current = strtotime( $first );
+    $last = strtotime( $last );
+
+    while( $current <= $last ) {
+
+        $dates[] = date( $format, $current );
+        $current = strtotime( $step, $current );
+    }
+
+    return $dates;
+}
+
+
+// foreach (dateRange('2014-09-15','2014-09-16','+1 day','Y-m-d') as $day) {
+//      for ($k=1;$k<15;$k++) {
+//         try {
+//         foreach ($ah->get_transacties(array('datum' => $day,'kassanr'=>$k)) as $sale) {
+//             foreach ($sale as $sf) {
+//                 print($sf);
+//                 print("\t");
+//             }
+//             print("\n");
+//         }
+//         } catch (Exception $e) {
+//     }
+//      }
+// }
+
+
+for($g=1;$g<1000;$g++) {
+    try {
+
+    $a = $ah->get_article_info(array('assgroepnr' => $g))[0];
+    if ($a->assgroepomschrijving) {
+        print("$g\t".$a->assgroepomschrijving."\n");
+    }
+} catch (Exception $e) {
+     }
+}
 
 Class Ahold {
 
@@ -49,11 +92,10 @@ Class Ahold {
         $params['ahpikey'] = $this->key;
         $query_params = http_build_query($params);
         $url = $this->api_url . '/' . $path . '?' . $query_params;
-        //echo $url . "\n";
         $html = file_get_contents($url);
         $json = json_decode($html);
         if ($json == NULL){
-             echo $html;
+             //echo $html;
              throw new Exception("Exception on url \t" . $url);                  
         }
         return $json;

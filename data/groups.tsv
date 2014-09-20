@@ -1,0 +1,157 @@
+1	Groenteconserven	1
+2	Vruchtenconserven	1
+3	Broodbeleg	0
+4	Visconserven	1
+5	Vleesconserven	1
+7	Babyvoeding	0
+8	Koffie & Thee	1
+9	Drink Zuivel	1
+10	Eet Zuivel	1
+11	Koffiemelk	0
+12	Rode wijn	-1
+14	Frisdranken overig	-2
+15	Vruchtensappen	1
+16	Chips & Zoutjes	-2
+17	Koek	-2
+18	Suikerwerk	-2
+19	Chocolade	-2
+20	Broodvervangers	0
+22	Soepen	0
+23	Pasta	1
+25	Suiker	-1
+27	Bakprodukten	0
+28	Houdbare Zuivel	1
+29	Wasmiddelen	0
+30	Schoonmaak artikelen	0
+31	Dierenvoeding Kat	0
+32	Kassa verkoopmeubel	0
+33	Papierwaren	0
+34	Basis Non Food	0
+36	Speciale Voeding	0
+39	Beenmode	0
+44	Tussendoortjes	-2
+47	Borrel	-2
+48	zonnebrandartikelen	0
+52	Deli bediening	0
+55	Boter & Margarine	0
+56	Eieren	0
+58	Gevogelte zb	1
+59	Tabak	-4
+84	Kaas ZB	-1
+85	Droge Worst	-1
+86	Rookworst	-1
+87	Tijdschriften	0
+91	Fruit Wand	2
+92	Groenten Wand	2
+93	Groenten en fruit tafel	2
+96	Bloemen & Planten	0
+105	Aardappelen	2
+115	Kookgemak	0
+120	Vleeswaren ZB	1
+122	Salades ZB	2
+123	Nieuw wereld agf	2
+125	Gekoelde sappen	1
+127	Cereals	2
+128	Rijst	2
+131	Dierenvoeding Hond	0
+140	Noten & Toast	-1
+141	Seizoenfood	0
+142	Verse Noten	1
+160	Verse Vis ZB	2
+164	Gesteriliseerde Melk	1
+179	Speciaal Bier	-2
+200	Kaasvitrine	-1
+214	Cola	-2
+216	Bier Pils	-2
+226	Kruiden Specerijen	1
+227	Wereldkeuken	0
+235	Warm Tussendoor	-2
+236	Toiletartik & Luchtverfrissers	0
+238	Mondhygiene	0
+240	Bad & Douche & Zeep	0
+242	Periodeverzorging	0
+243	Geuren	0
+244	Styling	0
+245	Huid & Overig	0
+248	Haarmode	0
+250	Shampoo & Cremespoeling	0
+254	Babyluiers & Verzorging	0
+256	Maaltijdgemak	0
+258	Witte wijn & rose	-2
+259	Aperitieven & mixdranken	-2
+260	Aperitieven	-2
+262	Topwijn	-2
+263	Topwijnen wit	-2
+264	Grab & Go	-2
+285	Aardappel, pasta, rijst	2
+287	Gekoeld brood hartig	0
+290	Scheren	0
+291	Deodorant	0
+304	Spelen	0
+305	Budget entertainment	0
+306	Entertainment	0
+311	Feestartikelen	0
+314	Water	2
+325	Ontwikkelen & Afdrukken	0
+330	Wenskaarten/kadoverpakking	0
+333	HG Schoonmaakmiddelen	0
+337	Oosterse maaltijdcomponenten	0
+338	Mediterrane maaltijdcomp	0
+339	Basis Internat maaltijdcomp	0
+340	Koken en Tafelen Seizoen	0
+343	Koken en Tafelen	0
+348	Schoonmaakbenodigdheden	0
+350	Olie & Azijn	1
+352	Zuren & Frituurvetten	-2
+354	Snacksauzen	-2
+355	tickets	0
+356	Groente & Vleessauzen	-2
+359	Service artikelen counter	0
+360	Spaar assortiment	0
+371	Ondergoed	0
+373	Telecom	0
+378	Loterij	0
+382	Diepvries Snacks	-2
+385	Diepvries Maaltijdcomponenten	-2
+386	Diepvries Aardappelproducten	-2
+391	Diepvries IJs/Gebak	-2
+394	Diepvries Pizza's	-2
+404	Batterijen counter	0
+406	Scheermesjes tbv assgr 290	0
+408	Kantoor	0
+500	Witbrood	-1
+502	Bruinbrood	1
+504	Volkorenbrood	2
+508	Gevuld brood	-1
+510	Kleinbrood	0
+512	Kort houdbaar brood	1
+514	Gekoeld brood zoet	-1
+518	Luxe banket	-1
+520	BO grootbrood	0
+522	BO kleinbrood	0
+524	BO stokbrood	0
+526	BO banket zoet	-1
+528	BO banket hartig	-1
+538	vers Gebak ZB	-2
+545	Kaas ongekoeld	-1
+546	Deli droge worst	-1
+613	Kassakoeler zuivel	1
+614	Kassakoeler	0
+637	B zuivel	1
+652	B Counter	0
+659	Seizoensdisplay Koken en Wonen	0
+660	Werk en Spelen Impuls	0
+729	Cadeaukaarten	0
+734	Bad en bedtextiel	0
+758	Koken en tafelen aanvullend	0
+766	hotcounter	-2
+791	Nachtkleding	0
+792	Babytextiel	0
+793	Bovenkleding	0
+830	Geneesmiddelen	0
+841	modules sorbo	0
+860	Wholefoods	3
+903	Vlees zb & vegetarisch	2
+913	G&S Grill	-1
+950	Premiums diversen	0
+952	Diensten	0
