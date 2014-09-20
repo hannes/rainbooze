@@ -58,14 +58,14 @@ write.table(select(nutritional,ean,finalrank,calories,sugars,sat_fat,unsat_fat,f
 avgranks <- as.data.frame(nutritional %>% group_by(rtid) %>% summarize(avgrank=mean(finalrank)) %>% select(rtid,avgrank))
 avgranks$user <- round(runif(nrow(profiles),min=3,max=50))
 
-goodtxns <- c(sample(avgranks[avgranks$avgrank > 0,1],10),sample(avgranks[avgranks$avgrank < 0,1],3))
+goodtxns <- c(sample(avgranks[avgranks$avgrank > 0.5,1],10),sample(avgranks[avgranks$avgrank < 0,1],3))
 avgranks[avgranks$rtid %in% goodtxns,]$user <- 1
-badtxns <- c(sample(avgranks[avgranks$avgrank > 0,1],3),sample(avgranks[avgranks$avgrank < 0,1],10))
+badtxns <- c(sample(avgranks[avgranks$avgrank > 0,1],3),sample(avgranks[avgranks$avgrank < -0.5,1],10))
 avgranks[avgranks$rtid %in% badtxns,]$user <- 2
 
 dates <- seq(as.Date("2014-08-20"), as.Date("2014-09-21"), by="days")
 avgranks$date <- sample(dates,nrow(profiles),replace=T)
-profiles <- profiles %>% select(rtid,user,date)
+profiles <- avgranks %>% select(rtid,user,date)
 write.table(profiles,"profiles.tsv",sep="\t",quote=F,row.names=F,col.names=F)
 
 

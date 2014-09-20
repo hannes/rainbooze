@@ -28,7 +28,7 @@ hue(3,onoff=F,bri=1,sat=1)
 Sys.sleep(.5)
 
 hue(1,onoff=T,bri=1,sat=1)
-hue(3,onoff=F,bri=1,sat=1)
+hue(2,onoff=F,bri=1,sat=1)
 
 Sys.sleep(.5)
 
