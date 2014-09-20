@@ -10,7 +10,6 @@ names(grps) <- c("assgroepnr","assgroepname","assgroeprank")
 
 res <- mutate(txns,transactienr,transactiestart,hod=as.integer(substring(transactiestart,1,2))) %>% left_join(grps,by="assgroepnr") %>% 
   group_by(transactienr) %>% summarize(n=n(),rank=round(mean(assgroeprank),2)) %>% arrange(rank)
-res$user <-  round(runif(nrow(res),min=1,max=10))
 
 res
 
@@ -56,7 +55,7 @@ nut$emotion <- as.numeric(as.character(nut$emotion))
 
 nut$healthy <- as.numeric(as.character(nut$healthy))
 
-nut$eancode <- nut$ean
+nut$eancode <- nut$eanstr
 
 txns2 <- txns %>% left_join(nut,by="eancode") %>% left_join(grps,by="assgroepnr") %>% 
   mutate(finalrank=ifelse(is.na(healthy),assgroeprank,round(((healthy-5)/2+assgroeprank)/2,2))) %>%
@@ -65,3 +64,12 @@ head(txns2)
 
 
 freq <- txns %>% group_by(eancode) %>% summarize(n=n()) %>% arrange(desc(n)) %>% head(100)
+
+
+profiles <- txns %>% group_by(transactienr) %>% summarize()
+
+profiles$user <- round(runif(nrow(profiles),min=1,max=10))
+dates <- seq(as.Date("2014-08-20"), as.Date("2014-09-21"), by="days")
+profiles$date <- sample(dates,nrow(profiles),replace=T)
+
+
