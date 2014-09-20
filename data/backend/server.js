@@ -266,6 +266,7 @@ var getOneProduct = function(query, callback) {
 };
 
 app.get('/prodinfo/', function(req, res) {
+    res.header('Access-Control-Allow-Origin', '*');
     var query = req.query.q;
     //var query = req.params.query;
     getOneProduct(query, function(json) {
@@ -274,6 +275,7 @@ app.get('/prodinfo/', function(req, res) {
 });
 
 app.get('/transaction/:userid', function(req, res) {
+    res.header('Access-Control-Allow-Origin', '*');
     var userid = req.params.userid;
     res.end(JSON.stringify(dataset.profiles[userid], null, 4));
     //res.end(req.params.userid);
