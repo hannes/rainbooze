@@ -72,5 +72,5 @@ profiles$user <- round(runif(nrow(profiles),min=1,max=50))
 dates <- seq(as.Date("2014-08-20"), as.Date("2014-09-21"), by="days")
 profiles$date <- sample(dates,nrow(profiles),replace=T)
 profiles$transactienr <- 1:nrow(profiles)
-profiles <- profiles %>% select(user,transactienr,date)
+profiles <- profiles %>% select(transactienr,user,date)
 
