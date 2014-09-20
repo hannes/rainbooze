@@ -7,6 +7,7 @@ var csv = require('ya-csv');
 var app = express();
 
 var dataset = {};
+var lastUserId = "1";
 
 var readCSV = function(filename, callback, finish) {
     var reader = csv.createCsvFileReader(filename, {
@@ -296,6 +297,7 @@ app.get('/prodinfo/', function(req, res) {
 app.get('/transaction/:userid', function(req, res) {
     res.header('Access-Control-Allow-Origin', '*');
     var userid = req.params.userid;
+    lastUserId = userid;
     res.end(JSON.stringify(dataset.profiles[userid], null, 4));
     //res.end(req.params.userid);
 });
@@ -303,9 +305,18 @@ app.get('/transaction/:userid', function(req, res) {
 app.get('/rank/:userid', function(req, res) {
     res.header('Access-Control-Allow-Origin', '*');
     var userid = req.params.userid;
+    lastUserId = userid;
     var p = dataset.profiles[userid];
     res.end(JSON.stringify(p.avg_rank, null, 4));
 });
+
+app.get('/lastrank/', function(req, res) {
+    res.header('Access-Control-Allow-Origin', '*');
+    var p = dataset.profiles[lastUserId];
+    res.end(JSON.stringify(p.avg_rank, null, 4));
+});
+
+
 
 //app.get('/rank/:userid', function(req, res) {
 //    res.header('Access-Control-Allow-Origin', '*');
