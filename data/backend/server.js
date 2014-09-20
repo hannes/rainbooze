@@ -45,7 +45,8 @@ var init = function() {
     dataset.transactions = transactions;
     readCSV('transactions.tsv', function(tx) {
         var timestamp = new Date(tx[0] + " " + tx[1]);
-        var txid = parseInt(tx[4]);
+//        var txid = parseInt(tx[4]);
+        var txid = parseInt(tx[23]);
         var description = tx[7];
         var contents = parseContent(tx[9]);
         var assgroepnr = tx[19];
@@ -112,6 +113,8 @@ var init = function() {
                 console.log('join everything...');
                 for(var x in dataset.transactions) {
                     var tx = dataset.transactions[x];
+                    var divideBy = 0;
+                    var totalScore = 0;
                     for(var i=0; i<tx.products.length; i++) {
                         var product = tx.products[i];
                         if(groups[product.groupid] !== undefined) {
@@ -124,11 +127,14 @@ var init = function() {
                         }
                         if(nutritional[product.ean] !== undefined) {
                             product.nutrition = nutritional[product.ean];
+                            totalScore += nutritional[product.ean].rank;
+                            divideBy++;
                         }
                         else {
                             product.nutrition = null;
                         }
                     }
+                    tx.avg_rank = totalScore / divideBy;
                 }
                 
                 // init nutritional values
@@ -150,6 +156,19 @@ var init = function() {
                         data: transactions[txid]
                     });
                 }, function() {
+                    for(var x in profiles) {
+                        var p = profiles[x];
+                        var total = 0;
+                        var divideBy = 0;
+                        for(var i=0; i<p.transactions.length; i++) {
+                            var tx = p.transactions[i];
+                            if(!isNaN(tx.data.avg_rank)) {
+                                total += tx.data.avg_rank;
+                                divideBy++;
+                            }
+                        }
+                        p.avg_rank = total / divideBy;
+                    }
                     console.log('all done');
                 });
             });
@@ -281,5 +300,18 @@ app.get('/transaction/:userid', function(req, res) {
     //res.end(req.params.userid);
 });
 
+app.get('/rank/:userid', function(req, res) {
+    res.header('Access-Control-Allow-Origin', '*');
+    var userid = req.params.userid;
+    var p = dataset.profiles[userid];
+    res.end(JSON.stringify(p.avg_rank, null, 4));
+});
+
+//app.get('/rank/:userid', function(req, res) {
+//    res.header('Access-Control-Allow-Origin', '*');
+//    var userid = req.params.userid;
+//    var p = dataset.profiles[userid];
+//    res.end(JSON.stringify(p.avg_rank, null, 4));
+//});
 
 app.listen(8888);
