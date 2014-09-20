@@ -64,3 +64,4 @@ txns2 <- txns %>% left_join(nut,by="eancode") %>% left_join(grps,by="assgroepnr"
 head(txns2)
 
 
+freq <- txns %>% group_by(eancode) %>% summarize(n=n()) %>% arrange(desc(n)) %>% head(100)
