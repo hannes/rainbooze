@@ -69,12 +69,21 @@ var getOneProduct = function(query, callback) {
     var numDone = 0;
     for(var i=0; i<parts.length; i++) {
         getNutritionInfo(parts[i], function(list) {
+            var shouldDo = true;
             for(var j=0; j<list.length; j++) {
-                var product = list[j];
-                if(map[product.name] === undefined) {
-                    map[product.name] = [];
+                if(list[j].name == "Aal") {
+                    shouldDo = false;
+                    break;
                 }
-                map[product.name].push(product);
+            }
+            if(shouldDo) {
+                for(var j=0; j<list.length; j++) {
+                    var product = list[j];
+                    if(map[product.name] === undefined) {
+                        map[product.name] = [];
+                    }
+                    map[product.name].push(product);
+                }
             }
             if(++numDone >= parts.length) {
                 // this was the last callback
@@ -101,11 +110,25 @@ var getOneProduct = function(query, callback) {
     }
 };
 
-app.get('/', function(req, res) {
+app.get('/prodinfo/', function(req, res) {
     var query = req.query.q;
+    //var query = req.params.query;
     getOneProduct(query, function(json) {
         res.end(JSON.stringify(json, null, 4));
     });
+});
+
+app.get('/transaction/:userid/:date', function(req, res) {
+    var userid = req.params.userid;
+    var date = req.params.date;
+    
+    
+    
+//    var query = req.query.q;
+//    getOneProduct(query, function(json) {
+//        res.end(JSON.stringify(json, null, 4));
+//    });
+    res.end(req.params.userid);
 });
 
 app.listen(8888);
