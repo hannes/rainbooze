@@ -8,12 +8,67 @@ names(txns) <- c("datum","transactiestart","kassanr","cassierenr","transactienr"
 grps <- read.csv("groups.tsv",sep="\t",stringsAsFactors=F,header=F)
 names(grps) <- c("assgroepnr","assgroepname","assgroeprank")
 
-res <- mutate(txns,transactienr,transactiestart,hod=as.integer(substring(transactiestart,1,2))) %>% left_join(grps,by="assgroepnr") %>% 
-  group_by(transactienr) %>% summarize(n=n(),rank=round(mean(assgroeprank),2)) %>% arrange(rank)
-
-res
+# fix transaction numbers
+keyset <- tidset <- txns %>% group_by(datum,kassanr,cassierenr,transactiestart,transactienr) %>% summarize()
+keyset$rtid <- 1:nrow(keyset)
+txns <- txns %>% inner_join(keyset,by=c("datum","kassanr","cassierenr","transactiestart","transactienr"))
+write.table(txns,"transactions.tsv",sep="\t",quote=F,row.names=F,col.names=F)
 
 # 
+# prodnames <- txns %>% group_by(eancode,omschrijving) %>% summarise() %>% mutate(omclean=gsub("(^ah )|([^a-z ]+)","",omschrijving,perl=T)) %>% arrange(omclean)
+# 
+# nuts <-do.call("rbind",lapply(prodnames$omclean,function(name){
+#   print(name)
+#   
+#   dd <- fromJSON(file=paste0("http://localhost:8888/prodinfo?q=",URLencode(name)), method='C')
+#   if (length(dd) < 1) {
+#     return(NA)
+#   }
+#   #print(dd)
+#   dd
+#   }))
+# nut <- as.data.frame(nuts)
+# 
+# nut$ean <- prodnames$eancode
+# nut$oname <- prodnames$omschrijving
+# head(nut)
+# 
+# nut$name <- as.character(nut$name)
+# nut$calories <- as.numeric(nut$calories)
+# nut$sugars <- as.numeric(as.character(nut$sugars))
+# nut$sat_fat <- as.numeric(as.character(nut$sat_fat))
+# nut$unsat_fat <- as.numeric(as.character(nut$unsat_fat))
+# nut$fibers <- as.numeric(as.character(nut$fibers))
+# nut$carbs <- as.numeric(as.character(nut$carbs))
+# nut$cholestrol <- as.numeric(as.character(nut$cholestrol))
+# nut$protein <- as.numeric(as.character(nut$protein))
+# nut$emotion <- as.numeric(as.character(nut$emotion))
+# 
+# nut$healthy <- as.numeric(as.character(nut$healthy))
+# 
+# nut$eancode <- nut$eanstr
+
+nutritional <- txns %>% left_join(nut,by="eancode") %>% left_join(grps,by="assgroepnr") %>% 
+  mutate(finalrank=ifelse(is.na(healthy),assgroeprank,round(((healthy-5)/2+assgroeprank)/2,2))) 
+
+write.table(select(nutritional,ean,finalrank,calories,sugars,sat_fat,unsat_fat,fibers,carbs,cholestrol,protein),
+            "nutritional.tsv",sep="\t",quote=F,row.names=F,col.names=F)
+
+
+avgranks <- as.data.frame(nutritional %>% group_by(rtid) %>% summarize(avgrank=mean(finalrank)) %>% select(rtid,avgrank))
+avgranks$user <- round(runif(nrow(profiles),min=3,max=50))
+
+goodtxns <- c(sample(avgranks[avgranks$avgrank > 0,1],10),sample(avgranks[avgranks$avgrank < 0,1],3))
+avgranks[avgranks$rtid %in% goodtxns,]$user <- 1
+badtxns <- c(sample(avgranks[avgranks$avgrank > 0,1],3),sample(avgranks[avgranks$avgrank < 0,1],10))
+avgranks[avgranks$rtid %in% badtxns,]$user <- 2
+
+dates <- seq(as.Date("2014-08-20"), as.Date("2014-09-21"), by="days")
+avgranks$date <- sample(dates,nrow(profiles),replace=T)
+profiles <- profiles %>% select(rtid,user,date)
+write.table(profiles,"profiles.tsv",sep="\t",quote=F,row.names=F,col.names=F)
+
+
 # library(ggplot2)
 # library(ggthemes)
 # thm <- theme_few(base_size = 14)
@@ -23,54 +78,5 @@ res
 # #  theme + xlab("Hour of day") + ylab("Delay (min/km)") + ggtitle("New York Taxi Delays by Hour")
 #   
 
-prodnames <- txns %>% group_by(eancode,omschrijving) %>% summarise() %>% mutate(omclean=gsub("(^ah )|([^a-z ]+)","",omschrijving,perl=T)) %>% arrange(omclean)
 
-#prodnames <- head(prodnames,1000)
-nuts <-do.call("rbind",lapply(prodnames$omclean,function(name){
-  print(name)
-  
-  dd <- fromJSON(file=paste0("http://localhost:8888/prodinfo?q=",URLencode(name)), method='C')
-  if (length(dd) < 1) {
-    return(NA)
-  }
-  #print(dd)
-  dd
-  }))
-nut <- as.data.frame(nuts)
-
-nut$ean <- prodnames$eancode
-nut$oname <- prodnames$omschrijving
-head(nut)
-
-nut$name <- as.character(nut$name)
-nut$calories <- as.numeric(nut$calories)
-nut$sugars <- as.numeric(as.character(nut$sugars))
-nut$sat_fat <- as.numeric(as.character(nut$sat_fat))
-nut$unsat_fat <- as.numeric(as.character(nut$unsat_fat))
-nut$fibers <- as.numeric(as.character(nut$fibers))
-nut$carbs <- as.numeric(as.character(nut$carbs))
-nut$cholestrol <- as.numeric(as.character(nut$cholestrol))
-nut$protein <- as.numeric(as.character(nut$protein))
-nut$emotion <- as.numeric(as.character(nut$emotion))
-
-nut$healthy <- as.numeric(as.character(nut$healthy))
-
-nut$eancode <- nut$eanstr
-
-txns2 <- txns %>% left_join(nut,by="eancode") %>% left_join(grps,by="assgroepnr") %>% 
-  mutate(finalrank=ifelse(is.na(healthy),assgroeprank,round(((healthy-5)/2+assgroeprank)/2,2))) %>%
-  select(ean,finalrank,calories,sugars,sat_fat,unsat_fat,fibers,carbs,cholestrol,protein)
-head(txns2)
-
-
-freq <- txns %>% group_by(eancode) %>% summarize(n=n()) %>% arrange(desc(n)) %>% head(100)
-
-
-profiles <- as.data.frame(txns %>% group_by(transactienr,datum,transactiestart,kassanr) %>% summarize(n=n()))
-
-profiles$user <- round(runif(nrow(profiles),min=1,max=50))
-dates <- seq(as.Date("2014-08-20"), as.Date("2014-09-21"), by="days")
-profiles$date <- sample(dates,nrow(profiles),replace=T)
-profiles$transactienr <- 1:nrow(profiles)
-profiles <- profiles %>% select(transactienr,user,date)
 
