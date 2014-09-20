@@ -66,10 +66,11 @@ head(txns2)
 freq <- txns %>% group_by(eancode) %>% summarize(n=n()) %>% arrange(desc(n)) %>% head(100)
 
 
-profiles <- txns %>% group_by(transactienr) %>% summarize()
+profiles <- as.data.frame(txns %>% group_by(transactienr,datum,transactiestart,kassanr) %>% summarize(n=n()))
 
-profiles$user <- round(runif(nrow(profiles),min=1,max=10))
+profiles$user <- round(runif(nrow(profiles),min=1,max=50))
 dates <- seq(as.Date("2014-08-20"), as.Date("2014-09-21"), by="days")
 profiles$date <- sample(dates,nrow(profiles),replace=T)
-
+profiles$transactienr <- 1:nrow(profiles)
+profiles <- profiles %>% select(user,transactienr,date)
 
