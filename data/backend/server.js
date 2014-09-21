@@ -4,6 +4,7 @@ var request = require('request');
 var cheerio = require('cheerio');
 var http = require('http');
 var csv = require('ya-csv');
+var fs = require('fs');
 var app = express();
 
 var dataset = {};
@@ -316,7 +317,47 @@ app.get('/lastrank/', function(req, res) {
     res.end(JSON.stringify(p.avg_rank, null, 4));
 });
 
+app.get('/recipes/', function(req, res) {
+    res.header('Access-Control-Allow-Origin', '*');
+    var fileJSON = require('./recipes.json');
+    res.end(JSON.stringify(fileJSON, null, 4));
+});
 
+app.get('/stressbol', function(req, res) {
+    res.header('Access-Control-Allow-Origin', '*');
+    var fj = require('./recipes.json');
+    var prods = [];
+    var done = 0;
+    for(var i=0; i<fj.length; i++) {
+        var name = fj[i].name;
+        var dost = function(id) {
+            url = "https://api.bol.com/catalog/v4/search/?ids=29&q="+name+"&offset=0&limit=5&dataoutput=products,categories&apikey=50EF4B85707A48D09F3CA5A9B4F842B5&format=json";
+            request(url, function(error, response, html) {
+                if (!error) {
+                    var json = JSON.parse(html);
+                    var shouldParse = true;
+                    if(json.products === undefined) {
+                        shouldParse = false;
+                    }
+                    if(shouldParse) {
+                        for(var j=0; j<json.products.length; j++) {
+                            var prod = json.products[j];
+                            prod.recipe_id = id;
+                            prods.push(prod);
+                        }
+                    }
+                }
+                if(++done >= fj.length) {
+                    // last request
+                    res.end(JSON.stringify(prods, null, 4));
+                }
+            });
+        };
+        dost(fj[i].id);
+    }
+    //res.end(JSON.stringify(fileJSON, null, 4));
+    
+});
 
 //app.get('/rank/:userid', function(req, res) {
 //    res.header('Access-Control-Allow-Origin', '*');
