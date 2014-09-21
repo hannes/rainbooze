@@ -47,5 +47,5 @@ while(TRUE) {
 		}
 
 	}
-	Sys.sleep(.5)
+	Sys.sleep(.2)
 }

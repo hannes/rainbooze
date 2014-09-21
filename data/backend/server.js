@@ -10,6 +10,11 @@ var app = express();
 var dataset = {};
 var lastUserId = "1";
 
+var shuffle = function(o){ //v1.0
+	for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+	return o;
+};
+
 var readCSV = function(filename, callback, finish) {
     var reader = csv.createCsvFileReader(filename, {
         'separator': "\t",
@@ -355,15 +360,46 @@ app.get('/stressbol', function(req, res) {
         };
         dost(fj[i].id);
     }
-    //res.end(JSON.stringify(fileJSON, null, 4));
-    
 });
 
-//app.get('/rank/:userid', function(req, res) {
-//    res.header('Access-Control-Allow-Origin', '*');
-//    var userid = req.params.userid;
-//    var p = dataset.profiles[userid];
-//    res.end(JSON.stringify(p.avg_rank, null, 4));
-//});
+app.get('/stressbolrecipes', function(req, res) {
+    res.header('Access-Control-Allow-Origin', '*');
+    var fj = require('./recipes.json');
+    var prods = [];
+    var done = 0;
+    var numiter = fj.length;
+    for(var i=0; i<numiter; i++) {
+        var name = fj[i].name;
+        var dost = function(id) {
+            url = "https://api.bol.com/catalog/v4/search/?ids=29&q="+name+"&offset=0&limit=5&dataoutput=products,categories&apikey=50EF4B85707A48D09F3CA5A9B4F842B5&format=json";
+            request(url, function(error, response, html) {
+                if (!error) {
+                    var json = JSON.parse(html);
+                    var shouldParse = true;
+                    if(json.products === undefined) {
+                        shouldParse = false;
+                    }
+                    if(shouldParse) {
+                        for(var j=0; j<json.products.length; j++) {
+                            var prod = json.products[j];
+                            fj.push({
+                                name: prod.title,
+                                url: "http://www.bol.com",
+                                image: prod.images[prod.images.length-1].url
+                            });
+                        }
+                    }
+                }
+                if(++done >= numiter) {
+                    // last request
+                    // randomize fj
+                    shuffle(fj);
+                    res.end(JSON.stringify(fj, null, 4));
+                }
+            });
+        };
+        dost(fj[i].id);
+    }
+});
 
 app.listen(8888);
