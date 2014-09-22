@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html ng-app="hahmsterenApp">
+
+<head>
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/entypo.css" />
+</head>
+
+<body ng-controller="MainController">
+  
+  <div class="container-fluid header">
+    <div class="row">
+      <div class="col-lg-12">
+        <img class="avatar" src="img/avatar-1.png" ng-click="showPage('home')" />
+        <div class="score-badge" ng-show="setupComplete">
+          <img src="img/score-badge@2x.png" width="30" height="31" />
+          <div class="score-badge-number">{{userSpecs.total}}</div>
+        </div>
+        <img ng-show="setupComplete" class="icon-menu" src="img/menu@2x.png" width="45" height="37" ng-click="toggleMenu()" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Introduction -->
+  <div ng-show="pageIsVisible('introduction')">
+    <div class="container-fluid introduction">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <br>
+          <img class="introduction-image" src="img/intro.jpg" />
+
+          <h1>Hahmster&eacute;&eacute;&eacute;&eacute;n!</h1>
+          <p>Ben jij ook benieuwd hoe gezond je boodschappen zijn, of wil je snel lekkere en gezonde maaltijden vinden? Dan helpen wij je graag een handje!</p>
+
+          <button class="btn btn-primary custom" ng-click="showPage('setup')">Start met gezond zijn!</button>
+
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- Setup page -->
+  <div ng-show="pageIsVisible('setup')">
+    <div class="container-fluid setup">
+      <div class="row">
+        <div class="col-lg-12">
+          <h1>Een paar vraagjes...</h1>
+          <p>Om je een zo gezond mogelijk advies te geven hebben we een paar vragen. Natuurlijk gaan we vertrouwd met jouw gegevens om. <a href>Lees hoe wij jouw gegevens gebruiken</a>
+          </p>
+
+          <div class="alert alert-danger" role="alert" ng-show="showErrorNoPeople">Oeps! Je hebt nog niet aangegeven hoeveel mensen je meestal boodschappen voor doet!</div>
+
+          <form role="form">
+            <br>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Wat is je bonuskaart nummer?
+                <img src="img/info.png" width="30" height="29" />
+              </label>
+              <input type="email" class="form-control" id="exampleInputEmail1">
+            </div>
+            <br>
+
+            <label for="exampleInputEmail1">Voor hoeveel mensen kook je?</label>
+
+            <div class="adult-children">
+              <div class="adult">
+                <img src="img/adults@2x.png" width="91" height="83" />
+
+                <div>
+                  <div class="circle-button" ng-click="increaseAdult(-1)">-</div>
+                  <input type="text" min="0" max="10" ng-model="adultNumber" class="form-control selector">
+                  <div class="circle-button" ng-click="increaseAdult(1)">+</div>
+                </div>
+              </div>
+              <div class="child">
+                <img src="img/children@2x.png" width="91" height="83" />
+
+                <div>
+                  <div class="circle-button" ng-click="increaseChild(-1)">-</div>
+                  <input type="text" min="0" max="10" ng-model="childNumber" class="form-control selector">
+                  <div class="circle-button" ng-click="increaseChild(1)">+</div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <br>
+            <button type="submit" class="btn btn-primary custom pull-right" ng-click="continueToApp()">Volgende stap</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div ng-show="pageIsVisible('home')">
+    <section id="saldo" class="graph">
+    </section>
+
+    <div class="container-fluid green">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="status-container">
+            <div class="status-column">
+              <div class="status-value"><span ng-show="userSpecs.last > 0">+</span><span ng-show="userSpecs.last < 0">-</span>{{userSpecs.last}}</div>
+              <div class="status-title">deze week</div>
+            </div>
+            <div class="status-column">
+              <div class="status-value">{{userSpecs.total}}</div>
+              <div class="status-title">totaal</div>
+            </div>
+            <div class="status-column">
+              <div class="status-value"><i ng-show="userSpecs.status == 'goed'"class="entypo thumbs-up"></i><i ng-show="userSpecs.status == 'slecht'"class="entypo thumbs-down"></i>
+              </div>
+              <div class="status-title">deze week</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          
+          <div ng-show="buddies.length == 0">
+            <h1>Nodig een buddy uit!</h1>
+            <p>Nodig een buddy uit om mee te doen aan uitdagingen en wordt samen gezond!</p>
+          </div>
+          
+          <div class="person table" ng-repeat="buddy in buddies">
+            <div class="avatar column">
+              <img src="img/avatar@2x.png" width="98" height="98" />
+            </div>
+
+            <div class="info column">
+              <div class="name">{{buddy.name}}</div>
+              <div class="points">{{buddy.points}} punten</div>
+            </div>
+
+            <div class="buttons column">
+              <!--<img src="img/crown@2x.png" width="53" height="49" />&nbsp;-->
+              <img src="img/graph@2x.png" width="53" height="49" ng-click="toggleUser(buddy)" />
+            </div>
+          </div>
+          <br>
+          <div class="text-center">
+            <button class="btn btn-primary custom" ng-click="showPage('invite-buddy')">Nodig nog een buddy uit!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div ng-show="pageIsVisible('receipt')">
+    
+      <div class="container-fluid">
+
+        <div class="row">
+          <div class="col-lg-12">
+
+            <div class="go-back" ng-click="showPage('home')">&lang; Ga terug naar het overzicht</div>
+
+            <h1>Details van je bonnetje</h1>
+            <p>Hieronder zie je per product wat de gezondheid van het product is. Zo zie je wat wel en wat niet zo gezond is!</p>
+
+            <div class="row">
+              <div class="col-xs-10 col-xs-offset-1">
+                <div class="product-date">
+                  {{currentTransaction.date | date:'longDate'}}
+                </div>
+
+                <div class="table">
+                  <div class="product trow" ng-repeat="product in currentTransaction.data.products">
+                    <div class="name column">
+                      <div>{{product.description}}</div>
+                    </div>
+                    <div class="stars column">
+                      <i class="entypo star" ng-class="{'active': (product.nutrition.rank > 0)}"></i>
+                      <i class="entypo star" ng-class="{'active': (product.nutrition.rank > 0.5)}"></i>
+                      <i class="entypo star" ng-class="{'active': (product.nutrition.rank > 1)}"></i>
+                      <i class="entypo star" ng-class="{'active': (product.nutrition.rank > 1.5)}"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-3 col-xs-offset-1">Calori&euml;n: <br><strong>{{userSpecs.specs.calories}}</strong> kcal</div>
+        <div class="col-xs-3">Vetten:<br> <strong>{{userSpecs.specs.sat_fat}}</strong> gram</div>
+        <div class="col-xs-3">Cholesterol:<br> <strong>{{userSpecs.specs.cholestrol}}</strong> gram</div>
+      </div>
+      
+    </div>
+    
+    
+      <div class="container-fluid green" style="margin-top: 30px;">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="table">
+              <div class="product totals trow">
+                <div class="name column">Totaalscore:</div>
+                <div class="stars column">
+                  <div ng-show="currentTransaction.data.avg_rank <= 0">Niet zo gezond! :(</div>
+                  <i class="entypo star" ng-show="currentTransaction.data.avg_rank > 0"></i>
+                  <i class="entypo star" ng-show="currentTransaction.data.avg_rank > 0.5"></i>
+                  <i class="entypo star" ng-show="currentTransaction.data.avg_rank > 1"></i>
+                  <i class="entypo star" ng-show="currentTransaction.data.avg_rank > 1.5"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  </div>
+
+  <div ng-show="pageIsVisible('invite-buddy')">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="go-back" ng-click="showPage('home')">&lang; Ga terug naar het overzicht</div>
+
+          <h1>Nodig een buddy uit!</h1>
+
+          <label for="inp-buddy-search">Zoek op buddy naam:</label>
+          <input type="text" class="form-control" ng-model="buddySearch" id="inp-buddy-search">
+
+          <div class="person table" ng-repeat="buddy in extraBuddies | filter:buddySearch">
+            <div class="avatar column">
+              <img src="img/avatar@2x.png" width="98" height="98" />
+            </div>
+
+            <div class="info column">
+              <div class="name">{{buddy.name}}</div>
+              <div class="points">{{buddy.points}} punten</div>
+            </div>
+
+            <div class="buttons column">
+              <img src="img/plus@2x.png" width="53" height="49" ng-click="addBuddy(buddy)" />
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div ng-show="pageIsVisible('gezond-worden')">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="go-back" ng-click="showPage('home')">&lang; Ga terug naar het overzicht</div>
+          
+          <h1>Gezond worden is eenvoudig!</h1>
+          <p>Met behulp van jouw gegevens hebben wij op Bol.com receptenboeken en producten opgezocht die jou kunnen helpen met het gezonder worden. Zo is het kinderlijk eenvoudig om je snel beter te voelen!</p>
+
+          
+          <ul class="recommend">
+            <li ng-repeat="bol in bolData | limitTo: 6">
+              <div class="image">
+                <img ng-src="{{bol.images[0].url}}" />
+              </div>
+              <h3>{{bol.title}}</h3>
+              <div style="clear:both;"></div>
+            </li>
+          </ul>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+
+  <!-- Menu and menu-background -->
+  <div class="menu-background" ng-show="showMenu" ng-click="toggleMenu()"></div>
+  <ul class="menu" ng-show="showMenu">
+    <li ng-click="showPage('receipt')">Bekijk mijn laatste boodschappen</li>
+    <li ng-click="showPage('gezond-worden')">Help me gezonder worden</li>
+    <li ng-click="showPage('home')">Nodig buddies uit</li>
+  </ul>
+
+
+
+
+  <script src="libs/retina.min.js"></script>
+  <script src="libs/jquery.min.js"></script>
+  <script src="libs/angular.min.js"></script>
+  <script src="libs/angular.nl.js"></script>
+  <script src="scripts/app.js"></script>
+  <script src="libs/moment.min.js"></script>
+  <script src="libs/moment.range.js"></script>
+  <script src="libs/d3.js"></script>
+  <script src="libs/graph.js"></script>
+  <script src="libs/main.js"></script>
+
+</body>
+
+</html>

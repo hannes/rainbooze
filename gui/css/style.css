@@ -1,0 +1,454 @@
+body,html {
+	font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 300;
+  font-size: 18px;
+   -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+
+  /* No support for these yet, use at own risk */
+  -o-user-select: none;
+  user-select: none;   
+  
+  min-height: 700px;
+  padding-bottom: 20px;
+}
+h1 {
+  font-size: 48px;
+  color: #39b54a;
+}
+
+a {
+  font-weight: bold;
+  color: #2cb0ee;
+}
+
+p {
+  color: #888;
+}
+
+label {
+  font-weight: 600;
+  color: #39b54a;
+}
+
+.table {
+  display: table;
+}
+.trow {
+  display: table-row;
+}
+.column {
+  display: table-cell;
+}
+
+
+/* Overriding bootstrap styles */
+.btn.btn-primary.custom {
+  border: 1px solid #39b54a;
+  background: none;
+  color: #39b54a;
+  border-radius: 0;
+  font-size: 18px;
+}
+
+
+
+.header {
+  color: white;
+  background: #6d6e71;
+  height: 65px;
+}
+.header .avatar {
+  cursor: pointer; 
+}
+.header img.icon-menu {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  cursor: pointer;
+}
+
+.header .score-badge {
+  position: absolute;
+  top: 0;
+  top: 26px;
+  left: 67px;
+  width: 31px;
+  height: 30px;
+}
+.header .score-badge .score-badge-number {
+  position: absolute;
+  left: 0;
+  top: 5px;
+  text-align: center;
+  width: 100%;
+  font-size: 14px;
+}
+
+
+ul.menu {
+  position: absolute;
+  top: 65px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: white;
+  box-shadow: 0 3px 3px rgba(0,0,0,0.3);
+}
+
+ul.menu li {
+  padding: 20px 30px;
+  border-bottom: 1px solid #999;
+  font-size: 16px;
+  cursor: pointer;
+}
+ul.menu li:hover {
+  font-weight: 500;
+}
+
+ul.menu li:last-child {
+  border-bottom: none;
+}
+
+div.menu-background {
+  position: absolute;
+  top: 65px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.5);
+}
+
+
+/* Special container styles */
+.container-fluid.green { 
+  border-top: 3px solid #00a651;
+  background: #39b54a;
+  color: white;
+}
+
+.container-fluid.introduction {
+  text-align: center;
+}
+
+.container-fluid.introduction p {
+  font-size: 18px; 
+  color: #888;
+}
+
+.container-fluid.introduction button {
+  margin-top: 20px;
+}
+
+.container-fluid.introduction .introduction-image {
+  width: 300px;
+}
+
+.container-fluid.introduction .grass {
+  position: absolute;
+  bottom: 0;
+  z-index: -1;
+}
+
+
+/* Statusses */
+.status-container {
+  display: table;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.status-column {
+  display: table-cell;
+  text-align: center;
+}
+.status-value {
+  font-size: 30px;
+  font-weight: 600;
+}
+.status-title {
+  font-size: 16px;
+}
+
+/* Adult - children selection */
+.adult-children {
+  display: table;
+  width: 100%;
+  text-align: center;
+}
+.adult-children .circle-button {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  border-radius: 50%;
+  background: #39b54a;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  line-height: 30px;
+}
+.adult-children .selector {
+  display: inline-block;
+  width: 40px;
+  text-align: center;
+}
+.adult, .child {
+  display: table-cell;
+}
+.adult img, .child img {
+  margin-bottom: 15px;
+}
+
+.person {
+  border-bottom: 1px solid #39b54a;
+  padding: 10px 0;
+}
+
+.person .avatar {
+  width: 98px;
+}
+.person .info {
+  padding-left: 20px;
+}
+.person .info .name {
+  font-size: 30px;
+  font-weight: 600;
+  color: #39b54a;
+}
+  
+.person .buttons {
+  text-align: right;
+}
+
+.person .buttons img {
+  cursor: pointer;
+}
+/*
+          <div class="person table">
+            <div class="avatar column">
+              <img src="img/avatar@2x.png" width="98" height="98" />
+            </div>
+            
+            <div class="info column">
+              <div class="name">Julia</div>
+              <div class="points">+13 punten</div>
+            </div>
+            
+            <div class="buttons column">
+              <img src="img/graph@2x.png" width="53" height="49" />
+              <img src="img/crown@2x.png" width="53" height="49" />
+            </div>
+          </div>*/
+
+.product .column {
+  padding-bottom: 10px; 
+}
+
+.product, .product-date {
+  font-family: 'Droid Sans Mono';
+}
+.product-date {
+  padding: 30px 0;
+}
+.product .stars {
+  width: 180px; 
+}
+.product .stars .star {
+  color: #f0f0f0; 
+}
+.product .stars .star.active {
+  color: #39b54a;
+}
+.product.totals .name {
+  padding-top: 20px; 
+}
+
+.go-back {
+  padding-top: 20px;
+  cursor: pointer;
+}
+.go-back:hover {
+  color: #39b54a;
+}
+
+
+
+/* Graph */
+
+#saldo{
+    background-color: white;
+    width: 100%;
+    height: 250px;
+    position: relative;
+}
+
+section.graph .line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 2px;
+}
+section.graph .Me .line{
+    stroke-width: 3.5px;
+}
+
+
+section.graph .axis path,
+section.graph .axis line {
+  fill: none;
+  stroke: #ddd;
+  shape-rendering: crispEdges;
+}
+
+section.graph .x.axis path {
+  display: none;
+}
+
+section.graph .y{
+    display: none;
+}
+
+section.graph .grid path,
+section.graph .grid line {
+  fill: none;
+  stroke: #ddd;
+  stroke-width: 1px;
+  /*stroke-dasharray: 10 5;*/
+  shape-rendering: crispEdges;
+}
+section.graph .grid .domain{
+    display: none;
+}
+
+section.graph .person .point{
+    stroke-width: 0px;
+    /*stroke: #999;*/
+    /*fill: #555;*/
+    opacity: 0.7;
+}
+
+section.graph .person.Me .point{
+    fill: white;
+    stroke: #38c70b;
+    stroke-width: 4px;
+    opacity: 1;
+    cursor: pointer;
+}
+
+section.graph .person.Me .point.lastValue{
+    opacity: 1;
+    fill: #38c70b;
+}
+
+.labelPoint{
+    position: absolute;
+    display: block;
+    width: 100px;
+    height: 25px;
+    background-color: #38c70b;
+    margin-left: -47px;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+    line-height: 25px;
+}
+.labelPoint:after{
+    top: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-top-color: #38c70b;
+	border-width: 10px;
+	margin-left: -10px;
+}
+
+.legenda{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 10px;
+    width: 150px;
+    display: none;
+    /*width: 200px;*/
+}
+
+.legenda .color{
+    display: block;
+    float: left;
+    clear: both;
+    width: 10px;
+    height: 10px;
+    border: 1px solid #999;
+    margin-top: 3px;
+}
+.legenda .name{
+    padding-left: 7px;
+    display: inline-block;
+    line-height: 20px;
+    background: white;
+    float: left;
+}
+
+
+section.status{
+    height: 120px;
+    background-color: #3dc60a;
+    color: white;
+    padding: 0px 20px;
+}
+
+section.status .item{
+    float: left;
+    font-size: 26px;
+    width: 100px;
+    text-align: center;
+}
+
+section.status .item .points{
+    font-size: 30px;
+    line-height: 60px;
+}
+
+#smallGraph1{
+   width: 200px;
+   height: 150px;
+} 
+
+#largeGraph{
+   width: 600px;
+   height: 350px;
+} 
+
+
+.recommend{
+    list-style: none;
+    margin: 0;
+
+}
+
+.recommend li{
+    clear: both;
+    padding: 5px 0px;
+    border-bottom: 1px solid #ddd;
+}
+
+.recommend li h3{
+    padding-left: 60px;
+
+}
+
+.recommend li div img{
+    width: 45px;
+    float: left;
+}
+
+.recommend li a{
+    color: #444;
+    text-decoration: none;
+}
